@@ -1,0 +1,28 @@
+name: flutter_image_picker
+description: A Flutter plugin for iOS and Android for picking images from the image library.
+version: 1.4.4
+author: minhtuan <673636090@qq.com>
+homepage: https://github.com/minhtuan/flutter_image_picker.git
+
+environment:
+  sdk: ">=2.2.0 <3.0.0"
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  plugin:
+    androidPackage: com.minhtuan.flutter_image_picker
+    pluginClass: ImagePickerFlutterPlugin
+
+  #图片
+  assets:
+    - images/placeholder.webp
+
+  #字体Icon
+  fonts:
+    - family: iconfont
+      fonts:
+        - asset: fonts/iconfont.ttf

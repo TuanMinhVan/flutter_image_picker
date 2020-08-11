@@ -1,0 +1,12 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+.svn/
+pubspec.lock
+.packages
+.flutter-plugins
+android/local.properties
+android/.gradle/
+android/gradlew
+android/gradlew.bat
+build/
+example/pubspec.lock
