@@ -16,14 +16,6 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * 默认情况下，即不需要指定intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
- * 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，
- * 可以通过dat extra能够得到原始图片位置。即，如果指定了目标uri，data就没有数据，
- * 如果没有指定uri，则data就返回有数据！
- *
- * 7.0 调用系统相机拍照不再允许使用Uri方式，应该替换为FileProvider
- */
 internal fun PluginRegistry.Registrar.takePicture(result: MethodChannel.Result) {
 
     var takeImageFile = context().createFolder()
@@ -72,14 +64,6 @@ fun Context.createFolder(): File {
     return folder
 }
 
-/**
- * 默认情况下，即不需要指定intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
- * 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，
- * 可以通过dat extra能够得到原始图片位置。即，如果指定了目标uri，data就没有数据，
- * 如果没有指定uri，则data就返回有数据！
- *
- * 7.0 调用系统相机拍照不再允许使用Uri方式，应该替换为FileProvider
- */
 internal fun PluginRegistry.Registrar.takeVideo(result: MethodChannel.Result) {
     var takeImageFile = context().createFolder()
     takeImageFile = createFile(takeImageFile, "VIDEO-", ".mp4")
@@ -110,7 +94,6 @@ internal fun PluginRegistry.Registrar.takeVideo(result: MethodChannel.Result) {
         this.activity().runOnUiThread {
             result.success(imageItem)
         }
-
     }
 }
 
@@ -142,7 +125,6 @@ internal class ResultListener : PluginRegistry.ActivityResultListener {
         onCompleted?.invoke()
         return true
     }
-
 }
 
 internal fun size(path: String, isImage: Boolean = true): Array<Int> {

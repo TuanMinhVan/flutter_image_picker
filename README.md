@@ -1,18 +1,47 @@
-# flutter_image_picker
+# flutter_image_picker [![pub package](https://img.shields.io/pub/v/flutter_image_picker.svg)](https://pub.dartlang.org/packages/flutter_image_picker)
 
-### iOS 权限
+- [x] Support in front of the complaint IOS (8-13), Android (16-29)
+- [x] Support single, multiple
+- [x] Provided cheering, visual recording function
+- [x] Support various types of personalized PNG, JPG, GIF, etc.
+- [x] Support multi-various viewing style, viewing iOS, iOS native method support
+- [x] Provided by the resource capital
+- [ ] Unsupported original map
+- [ ] Unsupported
+- [ ] Non-supporting IOS, Android motion claim, demand use Nozomi own claim claim, building use[permission_handler](https://github.com/BaseflowIT/flutter-permission-handler)
+- [ ] ...
+
+## Demo animation(Unclear)
+![image](https://github.com/taijuan/flutter_image_picker/blob/master/image.gif)
+
+## Instructions for use
+
+### Android Essential Addition Kotlin
+
+### Ios Mandatory Swift Essential Items
+
+### dependencies in flutter
+
+```
+
+dependencies:
+  flutter_image_picker: ^1.4.4
+  
+```
+
+### iOS Claim
 
 ``` 
 
 <key>NSPhotoLibraryUsageDescription</key>
-<string>使用图片</string>
+<string>Used pieces</string>
 <key>NSCameraUsageDescription</key>
-<string>照相</string>
+<string>Territory</string>
 <key>NSMicrophoneUsageDescription</key>
-<string>录音</string>
+<string>Recording</string>
 
 ```
-### Android 权限
+### Android Claim
 
 ``` Android Permissions
 
@@ -21,3 +50,22 @@
 <uses-permission android:name="android.permission.CAMERA" />
 
 ```
+ 
+
+## Demo 
+
+### [Android APP](https://fir.im/qfb8)
+
+### IOS APP Providing the cause of failure, not provided, available below
+
+
+
+
+## API Care
+- [ImagePicker](https://github.com/minhtuan/flutter_image_picker/blob/master/lib/src/image_picker.dart)
+  - singlePicker
+  - mulPicker
+  - takePicture
+  - takeVideo
+
+

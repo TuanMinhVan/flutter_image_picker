@@ -37,7 +37,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
         }
     }
 
-    //MARK:获取对应相册数据源
     private func getFolders(type:Int,result:@escaping FlutterResult){
         let old = Date().timeIntervalSince1970
         allImages.removeAll()
@@ -51,9 +50,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
                 fetchOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.video.rawValue)
             }else{}
             let all = PHAsset.fetchAssets(with: fetchOptions);
-
-            //self.awaitAllPath(all: all) 该方法耗时太久
-            //资源绝对路径改为flutter图片显示异步加载，见方法@see getPath(id:String,result:@escaping FlutterResult)
             for index in 0..<all.count{
                 let asset = all[index]
                 var d = Dictionary<String,Any>();
@@ -86,8 +82,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
                 }
             }
             let cur = Date().timeIntervalSince1970
-            logE("全部结束")
-            logE("\(cur - old)")
             DispatchQueue.main.async {
                result(self.allFolders)
             }
@@ -96,8 +90,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
         DispatchQueue.global(qos: .background).async(execute: work)
     }
 
-
-    //MARK:相册图片视频逻辑
     private func checkItem(id:String,folder:String){
         let index = allImages.firstIndex { (d) -> Bool in
             let _id:String? = d["id"] as? String
@@ -111,7 +103,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
             allImages.append(d)
         }
     }
-    //MARK:获取对应相册图片视频数据源
     private func getImages(folder:String,result:@escaping FlutterResult){
         if(folder == "All"){
             result(self.allImages)
@@ -124,7 +115,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
         }
     }
 
-    //Mark:获取文件名
     private func getName(path:String)->String{
         var name = ""
         if(path.contains("/")){
@@ -135,7 +125,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
         logE(name)
         return name
     }
-    //MARK：获取所用图片的路径、并且异步任务同时完成返回，一次性获取等待时间太久，该方法废弃
     private func awaitAllPath(all:PHFetchResult<PHAsset>){
         let old = Date().timeIntervalSince1970
         let queue = DispatchQueue.global()
@@ -154,11 +143,8 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
             })
         }
         _ = group.wait(wallTimeout: DispatchWallTime.distantFuture)
-        logE("结束")
         let cur = Date().timeIntervalSince1970
-        logE("\(cur - old)")
     }
-    //MARK：通过PHAsset获取图片文件绝对路径
     private func getPath(asset:PHAsset,folder:String,result:@escaping(Dictionary<String,Any>)->Void){
         if(asset.mediaType == PHAssetMediaType.image){
             getImagePath(asset: asset,folder: folder,result: result)
@@ -167,7 +153,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
         }
     }
 
-    //MARK：通过LocalIdentifiers获取图片文件绝对路径
     private func getPath(id:String,result:@escaping FlutterResult){
         let work = DispatchWorkItem {
             var path:String = ""
@@ -188,7 +173,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
         self.works.append(work)
         DispatchQueue.global(qos: .background).async(execute: work)
     }
-    //MARK:获取图片绝对路径
     private func getImagePath(asset:PHAsset,folder:String,result:@escaping(Dictionary<String,Any>)->Void){
         let options2 = PHContentEditingInputRequestOptions()
         options2.isNetworkAccessAllowed = true
@@ -207,7 +191,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
             result(d)
         }
     }
-    //MARK:获取视频绝对路径
     private func getVideoPath(asset:PHAsset,folder:String, result:@escaping(Dictionary<String,Any>)->Void){
         self.manager.requestAVAsset(forVideo: asset, options: nil, resultHandler: {a,v,any in
             let  url = (a as? AVURLAsset)?.url.absoluteString
@@ -226,7 +209,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
         });
     }
 
-    //MARK：FLutter不支持图片视频缩略图获取方式
     private func toUInt8List(id:String,width:Int,height:Int,result:@escaping FlutterResult){
         DispatchQueue.global(qos: .background).async {
             var data:Data?
@@ -246,7 +228,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
         }
     }
 
-    //MARK：任务取消
     private func cancelAll(result:@escaping FlutterResult){
         manager.stopCachingImagesForAllAssets();
         for work in self.works {
@@ -258,7 +239,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
         result(true);
     }
 
-    //MARK：拍照录制视频回调
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let mediaType = info[.mediaType] as! String;
         if(mediaType.contains("image")){
@@ -285,7 +265,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
 
     }
 
-    // MARK: 录制视频获取
     private func takeVideoData(videoUrl:NSURL,done: @escaping @convention(block) () -> Void){
         self.createAndGetAlbum { (album) in
             PHPhotoLibrary.shared().performChanges({
@@ -315,7 +294,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
         }
     }
 
-    // MARK: 拍照照片获取
     private func takePhotoData(image:UIImage,done: @escaping @convention(block) () -> Void){
         self.createAndGetAlbum { (album) in
             PHPhotoLibrary.shared().performChanges({
@@ -360,7 +338,6 @@ public class SwiftImagePickerFlutterPlugin: NSObject, FlutterPlugin ,UINavigatio
             }
         }
     }
-    // MARK: 拍照与录制视频
     private func takePicker(isVideo:Bool,result:@escaping FlutterResult){
         self.result = result;
         if (UIImagePickerController.isSourceTypeAvailable(.camera)){

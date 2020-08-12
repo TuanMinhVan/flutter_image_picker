@@ -14,13 +14,13 @@ import java.util.concurrent.Future
 import java.util.concurrent.ScheduledExecutorService
 
 
-private val IMAGE_PROJECTION = arrayOf(//查询图片需要的数据列
+private val IMAGE_PROJECTION = arrayOf(
         MediaStore.Files.FileColumns._ID,
-        MediaStore.MediaColumns.DISPLAY_NAME, //图片的真实路径  /storage/emulated/0/pp/downloader/wallpaper/aaa.jpg
-        MediaStore.MediaColumns.MIME_TYPE, //图片的类型     image/jpeg
+        MediaStore.MediaColumns.DISPLAY_NAME, 
+        MediaStore.MediaColumns.MIME_TYPE,
         MediaStore.MediaColumns.DATE_ADDED,
         MediaStore.MediaColumns.WIDTH,
-        MediaStore.MediaColumns.HEIGHT)    //图片被添加的时间，long型  1450518608
+        MediaStore.MediaColumns.HEIGHT)  
 
 internal const val IMAGE_SELECTION = "${MediaStore.Files.FileColumns.MEDIA_TYPE}=${MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE} AND ${MediaStore.Files.FileColumns.SIZE}>0"
 internal const val VIDEO_SELECTION = "${MediaStore.Files.FileColumns.MEDIA_TYPE}=${MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO} AND ${MediaStore.Files.FileColumns.SIZE}>0"
