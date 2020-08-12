@@ -11,8 +11,7 @@
 - [ ] Non-supporting IOS, Android motion claim, demand use Nozomi own claim claim, building use[permission_handler](https://github.com/BaseflowIT/flutter-permission-handler)
 - [ ] ...
 
-## Demo animation(Unclear)
-![image](https://github.com/taijuan/flutter_image_picker/blob/master/image.gif)
+
 
 ## Instructions for use
 
